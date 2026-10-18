@@ -6,6 +6,18 @@ pub mod ticket {
     }
 
     impl Ticket {
+        // self here is a copy of the Ticket struct
+        // since it is an instance of the Ticket struct on his own not a reference to it
+        // it have full ownership of his fields
+        pub fn title(self)->String{
+            self.title
+        }
+        pub fn description(self)->String{
+            self.description
+        }
+        pub fn status(self)->String{
+            self.status
+        }
         pub fn new(title: String, description: String, status: String) -> Ticket {
             if title.is_empty() {
                 panic!("Title cannot be empty");
