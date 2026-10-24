@@ -6,10 +6,12 @@
 // collections (e.g. BTreeMap).
 
 /// Return the minimum of two values.
-pub fn min<T>(left: T, right: T) -> T {
+pub fn min<T: PartialOrd>(left: T, right: T) -> T {
     if left <= right {
         left
     } else {
         right
     }
 }
+// a trait bound is a constraint placed on generic types or trait object that requires
+// the generic types to implement a specific/set trait in order to work properly

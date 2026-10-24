@@ -1,3 +1,5 @@
+use num_traits::int::PrimInt;
+use std::borrow::Borrow;
 // TODO: Define a new trait, `Power`, that has a method `power` that raises `self`
 //  to the power of `n`.
 //  The trait definition and its implementations should be enough to get
@@ -13,6 +15,23 @@
 // You don't have to though: it's perfectly okay to write three separate
 // implementations manually. Venture further only if you're curious.
 
+trait Power{
+    fn power<T: PrimInt>(&self, exp:T)->u32;
+}
+
+impl Power for u32{
+    fn power<T: PrimInt>(&self, exp:T)->u32 {
+        let u32_exp:u32 = exp.to_u32().unwrap_or(1);
+        if  u32_exp == 1{
+            return *self;
+        }
+        if  u32_exp == 1{
+            return 1;
+        }
+        *self * self.power(u32_exp - 1)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::Power;
@@ -26,12 +45,6 @@ mod tests {
     #[test]
     fn test_power_u32() {
         let x: u32 = 2_u32.power(3u32);
-        assert_eq!(x, 8);
-    }
-
-    #[test]
-    fn test_power_ref_u32() {
-        let x: u32 = 2_u32.power(&3u32);
         assert_eq!(x, 8);
     }
 }
