@@ -1,9 +1,21 @@
 // TODO: Flesh out the `WeekTemperatures` struct and its method implementations to pass the tests.
+pub struct WeekTemperature {
+    weekday: Weekday,
+    value: Option<i32>
+}
+
+impl WeekTemperature {
+    fn new(weekday: Weekday, value: Option<i32>)-> Self {
+        Self { weekday: weekday, value: value}
+    }
+}
 
 pub struct WeekTemperatures {
+    week_temperature: [WeekTemperature; 7]
     // TODO
 }
 
+#[derive(Debug, PartialEq, Clone)]
 pub enum Weekday {
     Monday,
     Tuesday,
@@ -16,15 +28,32 @@ pub enum Weekday {
 
 impl WeekTemperatures {
     pub fn new() -> Self {
-        todo!()
+        let temp_week_temperature: [WeekTemperature; 7] = [
+            WeekTemperature::new(Weekday::Monday, None),
+            WeekTemperature::new(Weekday::Tuesday, None),
+            WeekTemperature::new(Weekday::Wednesday, None),
+            WeekTemperature::new(Weekday::Thursday, None),
+            WeekTemperature::new(Weekday::Friday, None),
+            WeekTemperature::new(Weekday::Saturday, None),
+            WeekTemperature::new(Weekday::Sunday, None)
+        ];
+        Self { week_temperature: temp_week_temperature}
     }
 
     pub fn get_temperature(&self, day: Weekday) -> Option<i32> {
-        todo!()
+        let found_temperature = self.week_temperature.iter().find(|&r| r.weekday == day);
+        if found_temperature.is_none(){
+            panic!("something went wrong when finding the date, it should have never happened");
+        }
+        found_temperature.unwrap().value
     }
 
     pub fn set_temperature(&mut self, day: Weekday, temperature: i32) {
-        todo!()
+        let found_temperature = self.week_temperature.iter().position(|r| r.weekday == day);
+        if found_temperature.is_none(){
+            panic!("something went wrong when finding the date, it should have never happened");
+        }
+        self.week_temperature[found_temperature.unwrap()] = WeekTemperature::new(day, Some(temperature));
     }
 }
 

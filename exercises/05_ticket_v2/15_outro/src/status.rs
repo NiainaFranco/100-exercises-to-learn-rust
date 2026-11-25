@@ -1,10 +1,46 @@
 // TODO: Implement `TryFrom<String>` and `TryFrom<&str>` for the `Status` enum.
 //  The parsing should be case-insensitive.
 
+
+#[derive(Debug, PartialEq, Clone)]
 pub enum Status {
     ToDo,
     InProgress,
     Done,
+}
+
+impl TryFrom<&str> for Status{
+    type Error = String;
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        let lowercased_value:String = value.to_ascii_lowercase();
+        if lowercased_value == "done"{
+            return Ok(Status::Done);
+        }
+        if lowercased_value == "todo"{
+            return Ok(Status::ToDo);
+        }
+        if lowercased_value == "inprogress"{
+            return Ok(Status::InProgress);
+        }
+        Err(format!("{} is not a valid argument", value.to_string()))
+    } 
+}
+
+impl TryFrom<String> for Status{
+    type Error = String;
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        let lowercased_value:String = value.to_ascii_lowercase();
+        if lowercased_value == "done"{
+            return Ok(Status::Done);
+        }
+        if lowercased_value == "todo"{
+            return Ok(Status::ToDo);
+        }
+        if lowercased_value == "inprogress"{
+            return Ok(Status::InProgress);
+        }
+        Err(format!("{} is not a valid argument", value))
+    } 
 }
 
 #[cfg(test)]

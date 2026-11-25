@@ -9,7 +9,7 @@
 //
 // Tests are located in the `tests` folder—pay attention to the visibility of your types and methods.
 
-use std::ops::Add;
+use std::{fmt::Debug, ops::Add};
 
 #[derive(Debug, Clone, Copy)]
 pub struct SaturatingU16{

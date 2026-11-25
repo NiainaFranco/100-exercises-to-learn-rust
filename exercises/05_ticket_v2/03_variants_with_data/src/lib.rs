@@ -2,6 +2,8 @@
 //  Return the name of the person assigned to the ticket, if the ticket is in progress.
 //  Panic otherwise.
 
+use std::any::Any;
+
 #[derive(Debug, PartialEq)]
 struct Ticket {
     title: String,
@@ -14,6 +16,16 @@ enum Status {
     ToDo,
     InProgress { assigned_to: String },
     Done,
+}
+
+impl Status{
+    fn get_in_progress(&self)->&str{
+        match self {
+           Self::Done => panic!("Only `In-Progress` tickets can be assigned to someone"),
+           Self::InProgress { assigned_to} => assigned_to,
+           Self::ToDo => panic!("Only `In-Progress` tickets can be assigned to someone")
+        }
+    }
 }
 
 impl Ticket {
@@ -38,7 +50,7 @@ impl Ticket {
         }
     }
     pub fn assigned_to(&self) -> &str {
-        todo!()
+        &self.status.get_in_progress()
     }
 }
 
